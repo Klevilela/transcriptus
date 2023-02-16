@@ -1,43 +1,43 @@
 const fs = require("fs");
+const gtts = require("gtts");
 
-// objects
-var textToIpa = {};
+// Define a constant object for text to IPA conversion
+const textToIpa = {};
 
-// reading dictionary
-let wordsInLine = fs.readFileSync("./ipadict.txt", "utf-8");
+// Read dictionary
+const wordsInLine = fs.readFileSync("./ipadict.txt", "utf-8");
 
-// parsing the file
-parsingFile = function (lines) {
-  for (var i in lines) {
-    var arr = lines[i].split(/\s+/g);
-    textToIpa[arr[0]] = arr[1];
+// Parse the file and store the text-to-IPA mappings in the textToIpa object
+const parsingFile = (lines) => {
+  for (const line of lines) {
+    const [word, ipa] = line.split(/\s+/g);
+    textToIpa[word] = ipa;
   }
-
-  /* console.log(
-    "Done parsing." + "\n" + Object.keys(textToIpa).length + " items loaded"
-  ); */
+  console.log(`Done parsing. ${Object.keys(textToIpa).length} items loaded.`);
 };
 
+// Call the parsingFile function with the words in lines
 parsingFile(wordsInLine.split("\n"));
 
-// find an an english word's corresponding IPA text
-findWord = function (word) {
-  var text = textToIpa[word];
-  /* for (let index = 1; index < 4; index++) {
-    if (typeof textToIpa[word + "(" + index + ")"] != undefined) {
-      text += textToIpa[word + "(" + index + ")"];
-    } else {
-      break;
-    }
-  } */
-  return textToIpa[word];
+// Find the IPA text for an English word
+const findWord = (word) => {
+  const text = textToIpa[word];
+  if (text === undefined) {
+    return undefined;
+  }
+  return text;
 };
 
-// translation to English Words
-translateWord = function (wordIPA) {
+const generateAudio = (text) => {
+  const tts = new gtts(text, "en");
+  tts.stream().pipe(fs.createWriteStream("audio.mp3"));
+};
+
+// Translate an IPA text to English words
+const translateWord = (wordIPA) => {
   let wordEn = "";
-  for (let i = 0; i < wordIPA.length; i++) {
-    switch (wordIPA[i]) {
+  for (const char of wordIPA) {
+    switch (char) {
       case "b":
         wordEn += "b";
         break;
@@ -178,4 +178,4 @@ translateWord = function (wordIPA) {
   return wordEn;
 };
 
-module.exports = { findWord, translateWord };
+module.exports = { findWord, translateWord, generateAudio };
