@@ -59,6 +59,9 @@ translateWord = function (wordIPA) {
       case "h":
         wordEn += "rr";
         break;
+         case "e":
+        wordEn += "e";
+        break;
       case "æ":
         wordEn += "é";
         break;
