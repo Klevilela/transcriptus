@@ -59,7 +59,7 @@ translateWord = function (wordIPA) {
       case "h":
         wordEn += "rr";
         break;
-         case "e":
+      case "e":
         wordEn += "e";
         break;
       case "æ":
@@ -167,8 +167,11 @@ translateWord = function (wordIPA) {
       case "ŋ":
         wordEn += "n";
         break;
-         case "ɚ":
+      case "ɚ":
         wordEn += "ur";
+        break;
+      case "ð":
+        wordEn += "th";
         break;
     }
   }
