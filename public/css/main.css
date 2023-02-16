@@ -1,0 +1,15 @@
+.animate__animated {
+  animation-duration: 1s;
+}
+
+.animate__fadeInDown {
+  animation-name: animate__fadeInDown;
+}
+
+.animate__fadeInUp {
+  animation-name: animate__fadeInUp;
+}
+
+.animate__fadeIn {
+  animation-name: animate__fadeIn;
+}
