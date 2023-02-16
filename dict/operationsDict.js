@@ -164,6 +164,9 @@ translateWord = function (wordIPA) {
       case "ŋ":
         wordEn += "n";
         break;
+         case "ɚ":
+        wordEn += "ur";
+        break;
     }
   }
   return wordEn;
