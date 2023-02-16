@@ -4,32 +4,52 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Arquivos CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css" />
-    <title>Transcritor Fonetico</title>
+    <link rel="stylesheet" href="/css/main.css" />
+
+    <!-- Biblioteca de ícones -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+
+    <title>Projeto</title>
   </head>
+
   <body>
     <hr />
+
     <div class="container">
       <div class="card">
         <div class="card-header">
-          <h2>Mostrar pronuncia da palavra</h2>
+          <h2 class="animate__animated animate__fadeInDown">
+            Mostrar pronúncia da palavra
+          </h2>
         </div>
+
         <div class="card-body">
           <form method="POST" action="/text/save">
             <textarea
               name="text"
               id="texto"
-              class="form-control"
-              placeholder="digite o texto aqui"
+              class="form-control animate__animated animate__fadeInUp"
+              placeholder="Digite o texto aqui"
             ></textarea>
             <br />
-            <button type="submit" class="btn btn-success">
-              Exibir Transcrição
+            <button
+              type="submit"
+              class="btn btn-success btn-lg animate__animated animate__fadeIn"
+            >
+              <i class="fas fa-volume-up mr-2"></i>&nbsp;Exibir Pronúncia
             </button>
           </form>
         </div>
       </div>
     </div>
+
+    <!-- Scripts JavaScript -->
+    <script src="/js/bootstrap.min.js"></script>
   </body>
-  <script src="/js/bootstrap.min.js"></script>
 </html>
