@@ -21,10 +21,25 @@ parsingFile(wordsInLine.split("\n"));
 
 // Find the IPA text for an English word
 const findWord = (word) => {
-  const text = textToIpa[word];
+  let text = textToIpa[word];
   if (text === undefined) {
     return undefined;
   }
+
+  // Iterate from 1 - 3. There are no more than 3 extra pronunciations.
+  for (let i = 1; i < 4; i++) {
+    // See if pronunciation i exists...
+    if (typeof textToIpa[word + "(" + i + ")"] != "undefined") {
+      // ...If it does we know that the error should be multi and the text
+      // is always itself plus the new pronunciation
+      error = "multi";
+      text += " / " + textToIpa[word + "(" + i + ")"];
+      // ...Otherwise no need to keep iterating
+    } else {
+      break;
+    }
+  }
+
   return text;
 };
 
@@ -36,6 +51,7 @@ const generateAudio = (text) => {
 // Translate an IPA text to English words
 const translateWord = (wordIPA) => {
   let wordEn = "";
+
   for (const char of wordIPA) {
     switch (char) {
       case "b":
@@ -45,7 +61,7 @@ const translateWord = (wordIPA) => {
         wordEn += "l";
         break;
       case "ʌ":
-        wordEn += "â";
+        wordEn += "ah";
         break;
       case "d":
         wordEn += "d";
@@ -63,7 +79,7 @@ const translateWord = (wordIPA) => {
         wordEn += "e";
         break;
       case "æ":
-        wordEn += "é";
+        wordEn += "ae";
         break;
       case "p":
         wordEn += "p";
@@ -81,13 +97,13 @@ const translateWord = (wordIPA) => {
         wordEn += "ow";
         break;
       case "ʊ":
-        wordEn += "u";
+        wordEn += "uh";
         break;
       case "aʊ":
         wordEn += "au";
         break;
       case "u":
-        wordEn += "uu";
+        wordEn += "uw";
         break;
       case "ɔɪ":
         wordEn += "ói";
@@ -110,29 +126,29 @@ const translateWord = (wordIPA) => {
       case "s":
         wordEn += "s";
         break;
+      case "v":
+        wordEn += "v";
+        break;
       case "t":
         wordEn += "t";
-        break;
-      case "ɪər":
-        wordEn += "íar";
         break;
       case "ɛ":
         wordEn += "é";
         break;
       case "ɔ":
-        wordEn += "ó";
+        wordEn += "ao";
         break;
-      case "tʃn":
-        wordEn += "tch";
+      case "ʧ":
+        wordEn += "ch";
         break;
       case "ər":
         wordEn += "êr";
         break;
       case "ɪ":
-        wordEn += "i";
+        wordEn += "ih";
         break;
       case "j":
-        wordEn += "i";
+        wordEn += "y";
         break;
       case "a":
         wordEn += "a";
@@ -162,16 +178,34 @@ const translateWord = (wordIPA) => {
         wordEn += "o";
         break;
       case "ɑ":
-        wordEn += "a";
+        wordEn += "aa";
         break;
       case "ŋ":
-        wordEn += "n";
+        wordEn += "ng";
         break;
       case "ɚ":
-        wordEn += "ur";
+        wordEn += "er";
         break;
       case "ð":
-        wordEn += "th";
+        wordEn += "dh";
+        break;
+      case "/":
+        wordEn += " " + "ou" + " ";
+        break;
+      case "ʒ":
+        wordEn += "zh";
+        break;
+      case "ʃ":
+        wordEn += "sh";
+        break;
+      case "ŋ":
+        wordEn += " ";
+        break;
+      case "ˈ":
+        wordEn += "ˈ";
+        break;
+      case "ʤ":
+        wordEn += "j";
         break;
     }
   }
