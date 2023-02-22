@@ -1,5 +1,4 @@
 const fs = require("fs");
-const gtts = require("gtts");
 
 // Define a constant object for text to IPA conversion
 const textToIpa = {};
@@ -22,6 +21,7 @@ parsingFile(wordsInLine.split("\n"));
 // Find the IPA text for an English word
 const findWord = (word) => {
   let text = textToIpa[word];
+
   if (text === undefined) {
     return undefined;
   }
@@ -43,16 +43,20 @@ const findWord = (word) => {
   return text;
 };
 
-const generateAudio = (text) => {
-  const tts = new gtts(text, "en");
-  tts.stream().pipe(fs.createWriteStream("audio.mp3"));
-};
+const legibleText = (fonem) => {};
 
 // Translate an IPA text to English words
 const translateWord = (wordIPA) => {
   let wordEn = "";
+  let count = 0;
 
   for (const char of wordIPA) {
+    if (count == 2 && char != "ˈ") {
+      wordEn += " - ";
+      count = 0;
+    }
+    count++;
+
     switch (char) {
       case "b":
         wordEn += "b";
@@ -61,7 +65,7 @@ const translateWord = (wordIPA) => {
         wordEn += "l";
         break;
       case "ʌ":
-        wordEn += "ah";
+        wordEn += "uh";
         break;
       case "d":
         wordEn += "d";
@@ -79,7 +83,7 @@ const translateWord = (wordIPA) => {
         wordEn += "e";
         break;
       case "æ":
-        wordEn += "ae";
+        wordEn += "a";
         break;
       case "p":
         wordEn += "p";
@@ -88,7 +92,7 @@ const translateWord = (wordIPA) => {
         wordEn += "i";
         break;
       case "i":
-        wordEn += "ii";
+        wordEn += "ee";
         break;
       case "aɪ":
         wordEn += "ai";
@@ -203,6 +207,7 @@ const translateWord = (wordIPA) => {
         break;
       case "ˈ":
         wordEn += "ˈ";
+        count--;
         break;
       case "ʤ":
         wordEn += "j";
@@ -212,4 +217,4 @@ const translateWord = (wordIPA) => {
   return wordEn;
 };
 
-module.exports = { findWord, translateWord, generateAudio };
+module.exports = { findWord, translateWord };
