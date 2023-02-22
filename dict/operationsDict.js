@@ -1,5 +1,4 @@
 const fs = require("fs");
-const gtts = require("gtts");
 
 // Define a constant object for text to IPA conversion
 const textToIpa = {};
