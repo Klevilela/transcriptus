@@ -1,4 +1,5 @@
 const fs = require("fs");
+const gtts = require("gtts");
 
 // Define a constant object for text to IPA conversion
 const textToIpa = {};
@@ -21,7 +22,6 @@ parsingFile(wordsInLine.split("\n"));
 // Find the IPA text for an English word
 const findWord = (word) => {
   let text = textToIpa[word];
-
   if (text === undefined) {
     return undefined;
   }
@@ -43,20 +43,11 @@ const findWord = (word) => {
   return text;
 };
 
-const legibleText = (fonem) => {};
-
 // Translate an IPA text to English words
 const translateWord = (wordIPA) => {
   let wordEn = "";
-  let count = 0;
 
   for (const char of wordIPA) {
-    if (count == 2 && char != "ˈ") {
-      wordEn += " - ";
-      count = 0;
-    }
-    count++;
-
     switch (char) {
       case "b":
         wordEn += "b";
@@ -65,7 +56,7 @@ const translateWord = (wordIPA) => {
         wordEn += "l";
         break;
       case "ʌ":
-        wordEn += "uh";
+        wordEn += "ah";
         break;
       case "d":
         wordEn += "d";
@@ -83,7 +74,7 @@ const translateWord = (wordIPA) => {
         wordEn += "e";
         break;
       case "æ":
-        wordEn += "a";
+        wordEn += "ae";
         break;
       case "p":
         wordEn += "p";
@@ -92,7 +83,7 @@ const translateWord = (wordIPA) => {
         wordEn += "i";
         break;
       case "i":
-        wordEn += "ee";
+        wordEn += "ii";
         break;
       case "aɪ":
         wordEn += "ai";
@@ -207,7 +198,6 @@ const translateWord = (wordIPA) => {
         break;
       case "ˈ":
         wordEn += "ˈ";
-        count--;
         break;
       case "ʤ":
         wordEn += "j";
